@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Items>
+
+  <Item id ="0"
+    name ="White Robe"
+    desc ="A white robe"
+    power ="0"
+    speed ="0"
+    type ="Equipment"
+    maxQuantity ="1"
+    price ="20"
+    quest ="false"
+  />
+
+  <Item id ="1"
+    name ="Sword of Austin"
+    desc ="An amuletor"
+    power ="7"
+    speed ="3"
+    type ="Equipment"
+    maxQuantity ="1"
+    price ="25"
+    quest ="false"
+    />
+
+    <Item id ="2"
+    name ="Healing Potion"
+    desc ="A potion that heals"
+    power ="5"
+    speed ="0"
+    type ="Consumable"
+    maxQuantity ="99"
+    price ="4"
+    quest ="false"
+  />
+
+  <Item id ="3"
+    name ="Speeding Potion"
+    desc ="A potion that gives Speed"
+    power ="0"
+    speed ="5"
+    type ="Consumable"
+    maxQuantity ="5"
+    price ="3"
+    quest ="false"
+  />
+
+  <Item id ="4"
+    name ="Torchlight"
+    desc ="Supposed to be a flashlight"
+    power ="10"
+    speed ="5"
+    type ="Equipment"
+    maxQuantity ="1"
+    price ="50"
+    quest ="true"      
+  />
+
+  <Item id ="5"
+  name ="Key"
+  desc ="It`s not a simple key"
+  power ="0"
+  speed ="0"
+  type ="Trash"
+  maxQuantity ="5"
+  price ="35"
+  quest ="true"
+  />
+
+  <Item id ="6"
+  name ="Llama`s Horn"
+  desc ="Even Llamas have horns"
+  power ="0"
+  speed ="0"
+  type ="Trash"
+  maxQuantity ="10"
+  price ="20"
+  quest ="false"
+  />
+
+  <Item id ="7"
+name ="Death Potion"
+desc ="A potion that hurts"
+power ="-25"
+speed ="0"
+type ="Consumable"
+maxQuantity ="99"
+price ="5"
+quest ="false"
+  />
+  
+</Items>
+
+
