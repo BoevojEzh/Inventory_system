@@ -47,15 +47,6 @@ public class Inventory : MonoBehaviour
         }
 //////////////////////////////////////////////
 
-        //AddItem("Inventory", 1);
-        AddItem("Inventory", 1);
-        //AddItem("Inventory", 3);
-        //AddItem("Inventory", 3);
-        AddItem("Inventory", 3);
-        //AddItem("Inventory", 3);
-        //AddItem("Inventory", 3);
-        //AddItem("Inventory", 6);
-        //AddItem("Inventory", 6);
 
 
     }
@@ -69,26 +60,29 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItemFromSlot (int id)
     {
-       // Item itemToRemove = ItemFromDBbyID(inventory[id].itemID);
 
-                    ItemData data = invSlots[id].transform.GetChild(0).GetComponent<ItemData>();
-                    data.amount--;
-                    data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
-                    if (data.amount == 0)
-                    {
-                        Destroy(invSlots[id].transform.GetChild(0).gameObject);
-                        inventory[id] = new Item();
-                    }
+        ItemData data = invSlots[id].transform.GetChild(0).GetComponent<ItemData>();
+        data.amount--;
+        data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
+
+        if (data.amount == 0)
+        {
+            invSlots[id].transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Item Icons/free_slot");
+            Destroy(invSlots[id].transform.GetChild(0).gameObject);
+            inventory[id] = new Item();
+        }
                     if (data.amount == 1)
                     {
                         invSlots[id].transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = "";
+
 
                     }
 
     }
 
-   public void AddItem(string destination, int id)
+   public bool AddItem(string destination, int id)
     {
+        bool added = false;
         Item itemAdd = ItemFromDBbyID(id);
         switch (destination)
         {
@@ -108,7 +102,8 @@ public class Inventory : MonoBehaviour
                                     itemObj.transform.GetChild(0).GetComponent<Text>().text = itemAdd.itemPrice.ToString();
 
 
-                            break;
+                            added = true;
+                            break; 
                                 }
                             }
 
@@ -124,23 +119,22 @@ public class Inventory : MonoBehaviour
                         if (data.amount < itemAdd.itemMaxQuantity)
                         {
                             data.amount++;
-                          //  inventory[cId].itemAmount++;
-                          //  print("if " + itemAdd.itemAmount);
+                            added = true;
                             data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
                         }
                         else
                         {
-                            //print("Else "+itemAdd.itemAmount);
-                            AddNewInventoryItem(itemAdd);
+                            added = AddNewInventoryItem(itemAdd);
                         }
                     }
                     else
                     {
-                        AddNewInventoryItem(itemAdd);
+                        added = AddNewInventoryItem(itemAdd);
                     }
                     break;
                 }
         }
+        return added;
     }
 
    public int InventoryContains(Item item)
@@ -177,8 +171,9 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    void AddNewInventoryItem(Item newItem)
+   bool AddNewInventoryItem(Item newItem)
     {
+        bool added = false;
         for (int i = 0; i < invSlots.Count; i++)
         {
             if (invSlots[i].transform.childCount == 0)
@@ -192,14 +187,15 @@ public class Inventory : MonoBehaviour
                 itemObj.name = newItem.itemName;
                 inventory[i] = newItem;
                 itemObj.GetComponent<ItemData>().amount = 1;
+                added = true;
                 break;
             }
         }
+        return added;
     }
 
-    public void SortedList(string sortType)//,List<Item> list)
+    public void SortedList(string sortType)
     {
-       //List<Item> sortingList = inventory;
         switch (sortType)
         {
             case "Price":
@@ -229,7 +225,6 @@ public class Inventory : MonoBehaviour
                         int max = i;
                         for (int j = i + 1; j < inventory.Count; j++)
                         {
-                           // print(ItemTypePriority(inventory[j])+" - "+  ItemTypePriority(inventory[max]));
                             if (ItemTypePriority(inventory[j]) > ItemTypePriority(inventory[max])) 
                             {
                                 max = j;
@@ -284,6 +279,7 @@ public class Inventory : MonoBehaviour
 
         if (invSlots[b].transform.childCount > 0 && invSlots[a].transform.childCount > 0)
         {
+            Sprite sprite = invSlots[b].transform.GetComponent<Image>().sprite;
 
             ItemData swapData = invSlots[b].transform.GetChild(0).GetComponent<ItemData>();
             Transform itTrans = invSlots[a].transform.GetChild(0);
@@ -294,42 +290,35 @@ public class Inventory : MonoBehaviour
             swapData.transform.SetParent(invSlots[a].transform);
             swapData.transform.position = invSlots[a].transform.position;
 
+            invSlots[b].transform.GetComponent<Image>().sprite = invSlots[a].transform.GetComponent<Image>().sprite;
+            invSlots[a].transform.GetComponent<Image>().sprite = sprite;
+
             inventory[swapData.slotID] = itTrans.GetComponent<ItemData>().item;
             inventory[a] = swapData.item;
             swapData.slotID = a;
         }
         else
         {
-            //print(b);
             if (invSlots[b].transform.childCount > 0)
             {
                ItemData itemBuff = invSlots[b].transform.GetChild(0).GetComponent<ItemData>();
 
-               // print(itemBuff.slotID);
                     inventory[a] = itemBuff.item;
                 itemBuff.transform.SetParent(invSlots[a].transform);
                 itemBuff.transform.position = invSlots[a].transform.position;
+
+                invSlots[a].transform.GetComponent<Image>().sprite = invSlots[b].transform.GetComponent<Image>().sprite;
+                invSlots[b].transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("Item Icons/free_slot");
+
                 inventory[itemBuff.slotID] = new Item();
+
                     itemBuff.slotID = a;
 
 
                
 
             }
-            else
-            {
-                //print(a);
-                //if (invSlots[a].transform.childCount > 0)
-                //{
-                //    for (int i = 0; i < invSlots[a].transform.GetChild(0).GetComponent<ItemData>().amount; i++)
-                //    {
-                //        Item itemBuffer = (inventory[a]);
-                //        RemoveItemFromSlot(a);
-                //        AddItem("Inventory",itemBuffer.itemID);
-                //    }
 
-                //}
-            }
 
         }
 

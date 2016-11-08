@@ -17,11 +17,12 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     private ContextMenu contextMenu;
 
+    Sprite sprite;
+
     void Start()
     {
         inv = GameObject.Find("Inventory").GetComponent<Inventory>();
         tooltip = inv.GetComponent<Tooltip>();
-        //contextMenu = GameObject.Find("Context Menu").GetComponent<ContextMenu>();
         contextMenu = inv.GetComponent<ContextMenu>();
     }
 
@@ -34,6 +35,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Vector2 vecPos = this.transform.position;
             offset = eventData.position - vecPos;
             this.transform.position = eventData.position - offset;
+            sprite = inv.invSlots[slotID].transform.GetComponent<Image>().sprite;
         }
     }
 
@@ -70,6 +72,8 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         this.transform.SetParent(inv.invSlots[slotID].transform);
         this.transform.position = inv.invSlots[slotID].transform.position;
+        this.transform.parent.GetComponent<Image>().sprite = sprite;
+
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
 

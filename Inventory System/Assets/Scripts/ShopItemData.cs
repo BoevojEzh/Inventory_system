@@ -78,8 +78,10 @@ public class ShopItemData : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void BuyItem()
     {
-        gold.gold -= item.itemPrice;
-        gold.transform.GetChild(0).GetComponent<Text>().text = gold.gold.ToString();
-        inv.AddItem("Inventory", item.itemID);
+        if (inv.AddItem("Inventory", item.itemID))
+            {
+            gold.gold -= item.itemPrice;
+            gold.transform.GetChild(0).GetComponent<Text>().text = gold.gold.ToString();
+        }
     }
 }

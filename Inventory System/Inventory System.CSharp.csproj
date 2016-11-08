@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\ItemData.cs" />
     <Compile Include="Assets\Scripts\ItemDatabase.cs" />
+    <Compile Include="Assets\Scripts\RemoveCarpet.cs" />
     <Compile Include="Assets\Scripts\ShopItemData.cs" />
     <Compile Include="Assets\Scripts\ShopTooltip.cs" />
     <Compile Include="Assets\Scripts\Slot.cs" />

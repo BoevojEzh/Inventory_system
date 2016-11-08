@@ -41,7 +41,9 @@ public class ContextMenu : MonoBehaviour {
         contextMenu.SetActive(true);
         contextMenu.transform.position = Input.mousePosition;
 
-        switch(item.itemType)
+        contextMenu.transform.GetChild(0).GetComponent<Button>().gameObject.SetActive(true);
+
+        switch (item.itemType)
         {
             case Item.ItemType.Equipment:
                 {  ///sorry for the next few lines. Just didnt want to create a Player`s character sheet for this demo project. So its just illusion of equipment action. Sorry for that crap again.
@@ -76,6 +78,7 @@ public class ContextMenu : MonoBehaviour {
     {
         Cursor.SetCursor(Resources.Load<Texture2D>("Item icons/drop_cursor"), Vector2.zero, CursorMode.ForceSoftware);
         contextMenu.SetActive(false);
+        amountField.SetActive(false);
     }
 
     public void Use()

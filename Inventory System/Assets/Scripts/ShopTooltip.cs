@@ -36,14 +36,31 @@ public class ShopTooltip : MonoBehaviour {
     public void CreateTooltipString()
     {
         string quest = "";
-        if (item.itemQuest) quest = "\nQuest Item";
+        string color = "#000000";
 
-        data = "<b>" + item.itemName + "</b>"
-            + "\n" + item.itemType
+        switch (item.itemType)
+        {
+            case Item.ItemType.Equipment:
+                {
+                    color = "#FF352B";
+                    break;
+                }
+            case Item.ItemType.Consumable:
+                {
+                    color = "#008400";
+                    break;
+                }
+        }
+
+        if (item.itemQuest) quest = "\n<color=#82345D>Quest Item</color>";
+
+
+        data = "<b> <color=#000000>" + item.itemName + "</color> </b>"
+            + "\n<color=" + color + ">" + item.itemType + "</color>"
             + quest
-            + "\n\n" + item.itemDesc
-            + "\n\nPower: " + item.itemPower
-            + "\nSpeed: " + item.itemSpeed;
+            + "\n" + item.itemDesc
+            + "\n\nPower: <color=#7F0200>" + item.itemPower + "</color>"
+            + "\nSpeed: <color=#01C614>" + item.itemSpeed + "</color>";
         tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
     }
 }
